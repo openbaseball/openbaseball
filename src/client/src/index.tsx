@@ -2,9 +2,11 @@ import { ConnectedRouter } from 'connected-react-router'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import { ThemeProvider } from 'styled-components'
 import App from './App'
-import store, { history } from './store'
 import * as serviceWorker from './serviceWorker'
+import store, { history } from './store'
+import theme from './theme'
 
 const target = document.querySelector('#root')
 
@@ -12,7 +14,9 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </div>
     </ConnectedRouter>
   </Provider>,

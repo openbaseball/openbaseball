@@ -1,7 +1,9 @@
 import { push } from 'connected-react-router'
+import { darken } from 'polished'
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
+import styled from 'styled-components'
 import {
   decrement,
   decrementAsync,
@@ -9,29 +11,45 @@ import {
   incrementAsync,
 } from '../../modules/counter'
 
+const Button = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+
+  /* Color the border and text with theme.main */
+  color: ${(props) => props.theme.colors.main};
+  border: 2px solid ${(props) => props.theme.colors.main};
+
+  :disabled {
+    color: ${(props) => darken(0.3, props.theme.colors.main)};
+    border: 2px solid ${(props) => darken(0.3, props.theme.colors.main)};
+  }
+`
+
 const Home = (props: any) => (
   <div>
     <h1>Home</h1>
     <p>Count: {props.count}</p>
 
     <p>
-      <button onClick={props.increment}>Increment</button>
-      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
+      <Button onClick={props.increment}>Increment</Button>
+      <Button onClick={props.incrementAsync} disabled={props.isIncrementing}>
         Increment Async
-      </button>
+      </Button>
     </p>
 
     <p>
-      <button onClick={props.decrement}>Decrement</button>
-      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
+      <Button onClick={props.decrement}>Decrement</Button>
+      <Button onClick={props.decrementAsync} disabled={props.isDecrementing}>
         Decrement Async
-      </button>
+      </Button>
     </p>
 
     <p>
-      <button onClick={() => props.changePage()}>
+      <Button onClick={() => props.changePage()}>
         Go to about page via redux
-      </button>
+      </Button>
     </p>
   </div>
 )
