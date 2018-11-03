@@ -1,20 +1,27 @@
+import { Flex } from '@rebass/grid'
 import React from 'react'
-import { Link, Route } from 'react-router-dom'
-import About from './pages/about'
-import Home from './pages/home'
+import { Route } from 'react-router-dom'
+import styled from 'styled-components'
+import { Normalize } from 'styled-normalize'
+import About from './containers/about'
+import Home from './containers/home'
+import NavBar from './containers/navbar'
+
+const BasicApp = styled(Flex)`
+  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+`
 
 const App = () => (
-  <div>
-    <header>
-      <Link to='/'>Home</Link>
-      <Link to='/about-us'>About</Link>
-    </header>
-
-    <main>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/about-us' component={About} />
-    </main>
-  </div>
+  <BasicApp flexDirection={'column'}>
+    <Normalize />
+    <NavBar />
+    <Flex width={'100%'}>
+      <main>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/about' component={About} />
+      </main>
+    </Flex>
+  </BasicApp>
 )
 
 export default App
