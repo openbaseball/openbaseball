@@ -16,10 +16,8 @@ const App = () => (
     <Normalize />
     <NavBar />
     <Flex width={'100%'}>
-      <main>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/about' component={About} />
-      </main>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/about' component={About} />
     </Flex>
   </BasicApp>
 )

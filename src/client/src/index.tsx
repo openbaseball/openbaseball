@@ -13,11 +13,9 @@ const target = document.querySelector('#root')
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </div>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </ConnectedRouter>
   </Provider>,
   target,

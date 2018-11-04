@@ -1,57 +1,30 @@
 import { push } from 'connected-react-router'
-import { darken } from 'polished'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Flex, Heading, Image } from 'rebass'
 import { bindActionCreators, Dispatch } from 'redux'
-import styled from 'styled-components'
+import CenterBox from '../../components/CenterBox'
+import PageContainer from '../../components/PageContainer'
 import {
   decrement,
   decrementAsync,
   increment,
   incrementAsync,
 } from '../../modules/counter'
+import WorldMapSvg from './world-map.svg'
 
-const Button = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-
-  /* Color the border and text with theme.main */
-  color: ${(props) => props.theme.colors.main};
-  border: 2px solid ${(props) => props.theme.colors.main};
-
-  :disabled {
-    color: ${(props) => darken(0.3, props.theme.colors.main)};
-    border: 2px solid ${(props) => darken(0.3, props.theme.colors.main)};
-  }
-`
-
-const Home = (props: any) => (
-  <div>
-    <h1>Home</h1>
-    <p>Count: {props.count}</p>
-
-    <p>
-      <Button onClick={props.increment}>Increment</Button>
-      <Button onClick={props.incrementAsync} disabled={props.isIncrementing}>
-        Increment Async
-      </Button>
-    </p>
-
-    <p>
-      <Button onClick={props.decrement}>Decrement</Button>
-      <Button onClick={props.decrementAsync} disabled={props.isDecrementing}>
-        Decrement Async
-      </Button>
-    </p>
-
-    <p>
-      <Button onClick={() => props.changePage()}>
-        Go to about page via redux
-      </Button>
-    </p>
-  </div>
+const Home = () => (
+  <PageContainer>
+    <Flex alignItems={'center'} justifyContent={'center'}>
+      <CenterBox>
+        <Heading fontSize={5} m={4}>
+          Find local baseball community<br />
+          around the world!
+        </Heading>
+        <Image src={WorldMapSvg} />
+      </CenterBox>
+    </Flex>
+  </PageContainer>
 )
 
 const mapStateToProps = ({ counter }: { counter: any }) => ({
@@ -63,7 +36,7 @@ const mapStateToProps = ({ counter }: { counter: any }) => ({
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
-      changePage: () => push('/about-us'),
+      changePage: () => push('/about'),
       decrement,
       decrementAsync,
       increment,
