@@ -1,0 +1,14 @@
+language: generic
+
+go:
+- "1.11"
+
+node_js:
+- "11"
+
+before_script:
+- cd ./src/client && npm install && cd ../../
+
+script:
+- make test
+- make test-client

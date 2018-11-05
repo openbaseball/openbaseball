@@ -24,6 +24,7 @@ const NavBar = () => (
     <LinkButton to={'/players'} text={'Players'} />
     <LinkButton to={'/championships'} text={'Championships'} />
     <LinkButton to={'/about'} text={'About'} />
+    <LinkButton right to={'/register'} text={'Join'} />
   </NavWrap>
 )
 

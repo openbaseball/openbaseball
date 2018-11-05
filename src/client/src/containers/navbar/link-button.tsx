@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { fontSize } from 'styled-system'
 
-const LinkButton = styled(Box)`
+interface ILinkButtonContainer {
+  right?: boolean
+}
+
+const LinkButtonContainer = styled(Box)`
+  margin-left: ${(props: ILinkButtonContainer) => props.right ? 'auto' : 'inherit'} !important;
   > a {
     color: ${(props) => props.theme.components.navbar.text} !important;
     text-decoration: none;
@@ -13,7 +18,7 @@ const LinkButton = styled(Box)`
     ${fontSize}
   }
 `
-LinkButton.defaultProps = {
+LinkButtonContainer.defaultProps = {
   fontSize: 1,
   p: 3,
 }
@@ -21,10 +26,11 @@ LinkButton.defaultProps = {
 interface ILinkButton {
   to: string,
   text: string,
+  right?: boolean,
 }
 
 export default (props: ILinkButton) => (
-  <LinkButton>
+  <LinkButtonContainer right={props.right}>
     <Link to={props.to}>{props.text}</Link>
-  </LinkButton>
+  </LinkButtonContainer>
 )

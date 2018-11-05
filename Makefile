@@ -28,7 +28,7 @@ build-client:
 	cd ./src/client && npm run build
 
 test-client:
-	cd ./src/client && npm run test
+	cd ./src/client && CI=true npm run test
 
 lint-client:
 	cd ./src/client && npm run lint
@@ -40,7 +40,7 @@ clean:
 	go clean
 
 build: clean
-	go build -o bin/service-entrypoint ./src/server/cmd/main.go
+	go build -o bin/service-entrypoint ./src/server/cmd/service
 
 fmt:
 	go fmt $(GOPACKAGES)
@@ -61,3 +61,6 @@ vet:
 
 lint:
 	ls $(GOFILES) | xargs -L1 golint
+
+docker:
+	docker build -t openbaseball/openbaseball:latest .
