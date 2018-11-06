@@ -1,11 +1,17 @@
-export default {
-  colors: {
-    main: 'red',
-  },
+const Colors = {
+  BlackText: '#0f0f0f',
+  Main: '#04306b',
+  WhiteText: '#f5f5f5',
+}
+
+const Theme = {
+  background: Colors.WhiteText,
   components: {
     navbar: {
-      background: '#04306b',
-      text: 'white',
+      background: Colors.Main,
+      text: Colors.WhiteText,
     },
   },
 }
+
+export default Theme

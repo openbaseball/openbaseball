@@ -3,23 +3,28 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { Normalize } from 'styled-normalize'
-import About from './containers/about'
-import Home from './containers/home'
+import AboutPage from './containers/about'
+import HomePage from './containers/home'
 import NavBar from './containers/navbar'
+import PlayerPage from './containers/player'
 
-const BasicApp = styled(Flex)`
-  font-family: "Helvetica Neue","Helvetica","Arial",sans-serif;
+const AppContainer = styled(Flex)`
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 `
+AppContainer.defaultProps = {
+  flexDirection: 'column',
+}
 
 const App = () => (
-  <BasicApp flexDirection={'column'}>
+  <AppContainer>
     <Normalize />
     <NavBar />
     <Flex width={'100%'}>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/about' component={About} />
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/player/:id' component={PlayerPage} />
+      <Route exact path='/about' component={AboutPage} />
     </Flex>
-  </BasicApp>
+  </AppContainer>
 )
 
 export default App
