@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
-    build: .
+  app:
+    image: openbaseball/openbaseball:latest
     ports:
-    - "5000:5000"
+    - 80:8890
