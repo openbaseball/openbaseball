@@ -1,4 +1,4 @@
-FROM golang:1.11.2
+FROM golang:1.11
 COPY ./ /app
 WORKDIR /app
 RUN make build
@@ -9,9 +9,15 @@ WORKDIR /app/src/
 RUN npm install
 RUN npm run build
 
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
+FROM nginx:latest
+RUN apt-get update && \
+    apt-get install -y supervisor && \
+    apt-get clean
 WORKDIR /app/
 COPY --from=0 /app/bin/service-entrypoint /app/service-entrypoint
 COPY --from=1 /app/src/build /app/static
-CMD ["/app/service-entrypoint"]
+COPY ./supervisord.conf /etc/supervisord.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Looks like a crap but now it's all what I need
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

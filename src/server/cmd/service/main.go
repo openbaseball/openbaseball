@@ -1,26 +1,24 @@
 package main
 
 import (
-	"html/template"
 	"log"
 	"net/http"
-	"path/filepath"
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/", http.StripPrefix("/", fs))
-
-	http.HandleFunc("*", serveTemplate)
+	http.HandleFunc("/", serveSomething)
 
 	log.Println("Listening...")
-	http.ListenAndServe(":8890", nil)
+	http.ListenAndServe(":8890", Log(http.DefaultServeMux))
 }
 
-func serveTemplate(w http.ResponseWriter, r *http.Request) {
-	lp := filepath.Join("static", "index.html")
-	fp := filepath.Join("static", filepath.Clean(r.URL.Path))
+func serveSomething(w http.ResponseWriter, _ *http.Request) {
+	w.Write([]byte("Hello!"))
+}
 
-	tmpl, _ := template.ParseFiles(lp, fp)
-	tmpl.ExecuteTemplate(w, "index", nil)
+func Log(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s", r.RemoteAddr, r.Method, r.URL)
+		handler.ServeHTTP(w, r)
+	})
 }
