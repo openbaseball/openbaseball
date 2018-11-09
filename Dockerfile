@@ -20,4 +20,5 @@ COPY ./supervisord.conf /etc/supervisord.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # Looks like a crap but now it's all what I need
+# TODO: divide into 2 containers
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

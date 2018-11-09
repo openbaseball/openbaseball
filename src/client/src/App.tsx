@@ -7,6 +7,8 @@ import AboutPage from './containers/about'
 import HomePage from './containers/home'
 import NavBar from './containers/navbar'
 import PlayerPage from './containers/player'
+import RegistrationPage from './containers/registration'
+import SuccessLoginPage from './containers/success-login'
 
 const AppContainer = styled(Flex)`
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -23,6 +25,8 @@ const App = () => (
       <Route exact path='/' component={HomePage} />
       <Route exact path='/player/:id' component={PlayerPage} />
       <Route exact path='/about' component={AboutPage} />
+      <Route exact path='/callback' component={SuccessLoginPage} />
+      <Route exact path='/register' component={RegistrationPage} />
     </Flex>
   </AppContainer>
 )

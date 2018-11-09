@@ -2,8 +2,11 @@ import { Flex } from '@rebass/grid'
 import React from 'react'
 import { Image } from 'rebass'
 import styled from 'styled-components'
+import Auth from '../../utils/auth'
 import LinkButton from './link-button'
 import LogoImage from './logo.svg'
+
+const auth = new Auth()
 
 const NavWrap = styled(Flex)`
   background-color: ${(props) => props.theme.components.navbar.background};
@@ -24,7 +27,12 @@ const NavBar = () => (
     <LinkButton to={'/players'} text={'Players'} />
     <LinkButton to={'/championships'} text={'Championships'} />
     <LinkButton to={'/about'} text={'About'} />
-    <LinkButton right to={'/register'} text={'Join'} />
+    {auth.isAuthenticated() &&
+    <LinkButton onClick={() => auth.logout()} right to={'/'} text={'LogOut'} />
+    }
+    {!auth.isAuthenticated() &&
+    <LinkButton onClick={() => auth.login()} right to={'/register'} text={'Join'}/>
+    }
   </NavWrap>
 )
 

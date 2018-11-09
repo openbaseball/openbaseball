@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@rebass/grid": "^6.0.0-4",
+    "@types/auth0-js": "^8.11.7",
     "@types/history": "^4.7.2",
     "@types/jest": "23.3.9",
     "@types/node": "10.12.2",
@@ -17,6 +18,7 @@
     "@types/redux": "^3.6.0",
     "@types/styled-components": "^4.0.3",
     "@types/styled-system": "^3.0.6",
+    "auth0-js": "^9.8.1",
     "connected-react-router": "^4.5.0",
     "history": "^4.7.2",
     "polished": "^2.3.0",

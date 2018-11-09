@@ -27,10 +27,16 @@ interface ILinkButton {
   to: string,
   text: string,
   right?: boolean,
+  onClick?: any,
 }
 
 export default (props: ILinkButton) => (
   <LinkButtonContainer right={props.right}>
-    <Link to={props.to}>{props.text}</Link>
+    {props.onClick &&
+      <Link onClick={props.onClick} to={props.to}>{props.text}</Link>
+    }
+    {!props.onClick &&
+      <Link to={props.to}>{props.text}</Link>
+    }
   </LinkButtonContainer>
 )
