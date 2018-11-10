@@ -22,7 +22,7 @@ const LogoContainer = styled(Image)`
 const NavBar = () => (
   <NavWrap width={'100%'}>
     <LogoContainer src={LogoImage} ml={3} />
-    <LinkButton to={'/'} text={'Open Baseball'} />
+    <LinkButton to={'/'} text={'Open Baseball'} bold={true} />
     {auth.isAuthenticated() &&
     <LinkButton onClick={() => auth.logout()} right to={'/'} text={'LogOut'} />
     }

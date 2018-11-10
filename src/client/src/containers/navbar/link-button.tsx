@@ -6,15 +6,16 @@ import { fontSize } from 'styled-system'
 
 interface ILinkButtonContainer {
   right?: boolean
+  bold?: boolean
 }
 
 const LinkButtonContainer = styled(Box)`
-  margin-left: ${(props: ILinkButtonContainer) => props.right ? 'auto' : 'inherit'} !important;
+  margin-left: ${(props: ILinkButtonContainer) => props.right ? 'auto' : 'inherit'};
   > a {
     color: ${(props) => props.theme.components.navbar.text} !important;
     text-decoration: none;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: ${(props: ILinkButtonContainer) => props.bold ? '700' : '500'};
     ${fontSize}
   }
 `
@@ -24,14 +25,15 @@ LinkButtonContainer.defaultProps = {
 }
 
 interface ILinkButton {
-  to: string,
-  text: string,
-  right?: boolean,
-  onClick?: any,
+  to: string
+  text: string
+  right?: boolean
+  onClick?: any
+  bold?: boolean
 }
 
 export default (props: ILinkButton) => (
-  <LinkButtonContainer right={props.right}>
+  <LinkButtonContainer right={props.right} bold={props.bold}>
     {props.onClick &&
       <Link onClick={props.onClick} to={props.to}>{props.text}</Link>
     }

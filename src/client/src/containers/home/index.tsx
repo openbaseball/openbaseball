@@ -3,28 +3,31 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Flex, Heading, Image } from 'rebass'
 import { bindActionCreators, Dispatch } from 'redux'
-import CenterBox from '../../components/CenterBox'
-import PageContainer from '../../components/PageContainer'
+import ActionButton from '../../components/action-button'
+import CenterBox from '../../components/center-box'
+import PageContainer from '../../components/page-container'
 import {
   decrement,
   decrementAsync,
   increment,
   incrementAsync,
 } from '../../modules/counter'
-import ActionButton from './action-button'
 import WorldMapSvg from './world-map.svg'
 
 const Home = () => (
   <PageContainer>
     <Flex alignItems={'center'} justifyContent={'center'}>
       <CenterBox>
-        <Heading fontSize={5} m={4}>
-          Find local baseball community<br />
-          around the world!
+        <Heading fontSize={5} m={2} mb={4}>
+          Local baseball communities<br />
+          around the world
+        </Heading>
+        <Heading fontSize={3} m={2} textAlign={'left'} fontWeight={'normal'}>
+          What do you want?
         </Heading>
         <Flex flexDirection={'column'}>
-          <ActionButton text={'Play Baseball'}/>
-          <ActionButton text={'Watch Games'} />
+          <ActionButton to={'/play'} text={'Play Baseball'}/>
+          <ActionButton to={'/watch'} text={'Watch Games'} />
           <Image mt={3} src={WorldMapSvg} />
         </Flex>
       </CenterBox>

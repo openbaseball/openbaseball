@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Box, Flex, Heading } from 'rebass'
 import { bindActionCreators, Dispatch } from 'redux'
-import PageContainer from '../../components/PageContainer'
+import PageContainer from '../../components/page-container'
 
 interface IPlayerProps {
   playerName: string,

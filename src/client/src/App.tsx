@@ -6,12 +6,15 @@ import { Normalize } from 'styled-normalize'
 import AboutPage from './containers/about'
 import HomePage from './containers/home'
 import NavBar from './containers/navbar'
+import PlayBeginningPage from './containers/play-beginning'
 import PlayerPage from './containers/player'
 import RegistrationPage from './containers/registration'
 import SuccessLoginPage from './containers/success-login'
+import TeamCreatePage from './containers/team-create'
+import './main.css'
 
 const AppContainer = styled(Flex)`
-  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family: "Play", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 `
 AppContainer.defaultProps = {
   flexDirection: 'column',
@@ -23,6 +26,8 @@ const App = () => (
     <NavBar />
     <Flex width={'100%'}>
       <Route exact path='/' component={HomePage} />
+      <Route exact path='/play' component={PlayBeginningPage} />
+      <Route exact path='/play/new-team' component={TeamCreatePage} />
       <Route exact path='/player/:id' component={PlayerPage} />
       <Route exact path='/about' component={AboutPage} />
       <Route exact path='/callback' component={SuccessLoginPage} />
