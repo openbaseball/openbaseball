@@ -11,6 +11,7 @@ import {
   increment,
   incrementAsync,
 } from '../../modules/counter'
+import ActionButton from './action-button'
 import WorldMapSvg from './world-map.svg'
 
 const Home = () => (
@@ -21,7 +22,11 @@ const Home = () => (
           Find local baseball community<br />
           around the world!
         </Heading>
-        <Image src={WorldMapSvg} />
+        <Flex flexDirection={'column'}>
+          <ActionButton text={'Play Baseball'}/>
+          <ActionButton text={'Watch Games'} />
+          <Image mt={3} src={WorldMapSvg} />
+        </Flex>
       </CenterBox>
     </Flex>
   </PageContainer>

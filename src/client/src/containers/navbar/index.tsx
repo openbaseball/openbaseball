@@ -23,10 +23,6 @@ const NavBar = () => (
   <NavWrap width={'100%'}>
     <LogoContainer src={LogoImage} ml={3} />
     <LinkButton to={'/'} text={'Open Baseball'} />
-    <LinkButton to={'/teams'} text={'Teams'} />
-    <LinkButton to={'/players'} text={'Players'} />
-    <LinkButton to={'/championships'} text={'Championships'} />
-    <LinkButton to={'/about'} text={'About'} />
     {auth.isAuthenticated() &&
     <LinkButton onClick={() => auth.logout()} right to={'/'} text={'LogOut'} />
     }

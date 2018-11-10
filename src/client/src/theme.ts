@@ -6,6 +6,9 @@ const Colors = {
 
 const Theme = {
   background: Colors.WhiteText,
+  colors: {
+    main: Colors.Main,
+  },
   components: {
     navbar: {
       background: Colors.Main,
