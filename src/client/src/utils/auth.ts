@@ -13,6 +13,11 @@ const options = {
 
 export default class Auth {
   public auth0 = new auth0.WebAuth(options)
+  private tokenRenewalTimeout: any
+
+  public constructor() {
+    this.scheduleRenewal()
+  }
 
   public login() {
     this.auth0.authorize()
@@ -37,6 +42,7 @@ export default class Auth {
       localStorage.setItem('access_token', authResult.accessToken)
       localStorage.setItem('id_token', authResult.idToken)
       localStorage.setItem('expires_at', expiresAt)
+      this.scheduleRenewal()
       // navigate to the home route
       history.push('/')
     }
@@ -47,7 +53,7 @@ export default class Auth {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
-    // navigate to the home route
+    clearTimeout(this.tokenRenewalTimeout)
     history.push('/')
   }
 
@@ -56,5 +62,27 @@ export default class Auth {
     // Access Token's expiry time
     const expiresAt = JSON.parse(String(localStorage.getItem('expires_at')))
     return new Date().getTime() < expiresAt
+  }
+
+  public renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+        if (err) {
+          console.log(err)
+        } else {
+          this.setSession(result)
+        }
+      },
+    )
+  }
+
+  public scheduleRenewal() {
+    const expiresAt = JSON.parse(String(localStorage.getItem('expires_at')))
+    const delay = expiresAt - Date.now()
+    if (delay > 0) {
+      clearTimeout(this.tokenRenewalTimeout)
+      this.tokenRenewalTimeout = setTimeout(() => {
+        this.renewToken()
+      }, delay)
+    }
   }
 }
