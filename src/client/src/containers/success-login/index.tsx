@@ -1,8 +1,5 @@
 import React from 'react'
-import { history } from '../../store'
-import Auth from '../../utils/auth'
-
-const auth = new Auth()
+import { auth, history } from '../../store'
 
 const SuccessLogin = () => {
   auth.handleAuthentication()

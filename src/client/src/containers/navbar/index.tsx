@@ -2,11 +2,9 @@ import { Flex } from '@rebass/grid'
 import React from 'react'
 import { Image } from 'rebass'
 import styled from 'styled-components'
-import Auth from '../../utils/auth'
+import { auth } from '../../store'
 import LinkButton from './link-button'
 import LogoImage from './logo.svg'
-
-const auth = new Auth()
 
 const NavWrap = styled(Flex)`
   background-color: ${(props) => props.theme.components.navbar.background};

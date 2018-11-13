@@ -3,8 +3,11 @@ import createHistory from 'history/createBrowserHistory'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './modules'
+import Auth from './utils/auth'
 
 export const history = createHistory()
+
+export const auth = new Auth()
 
 const initialState = {}
 const enhancers = []

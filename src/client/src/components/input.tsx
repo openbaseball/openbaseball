@@ -16,19 +16,7 @@ const InputElem = styled.input`
   ${width}
   ${borderRadius}
   :focus {
-    border: 1px solid ${(props: any) => props.theme.colors.accent};
-  }
-`
-
-const TextareaElem = styled.input`
-  outline: none;
-  border: 1px solid ${(props: any) => lighten(0.7, props.theme.colors.main)};
-  ${space}
-  ${fontSize}
-  ${width}
-  ${borderRadius}
-  :focus {
-    border: 1px solid ${(props: any) => props.theme.colors.accent};
+    border: 1px solid ${(props: any) => lighten(0.2, props.theme.colors.main)};
   }
 `
 
@@ -37,6 +25,7 @@ const Input = (props: any) => (
     p={3}
     mt={1}
     mb={3}
+    placeholder={props.placeholder || ''}
     borderRadius={4}
     {...props}
   />
