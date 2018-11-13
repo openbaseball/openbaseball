@@ -25,7 +25,7 @@ const NavBar = () => (
     <LinkButton onClick={() => auth.logout()} right to={'/'} text={'LogOut'} />
     }
     {!auth.isAuthenticated() &&
-    <LinkButton onClick={() => auth.login()} right to={'/register'} text={'Join'} red={true} />
+    <LinkButton right to={'/register'} text={'Join'} red={true} />
     }
   </NavWrap>
 )
