@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@rebass/grid": "^6.0.0-4",
     "@types/auth0-js": "^8.11.7",
     "@types/history": "^4.7.2",
     "@types/jest": "23.3.9",
@@ -15,7 +14,6 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-textarea-autosize": "^4.3.3",
     "@types/rebass": "^0.3.2",
-    "@types/rebass__grid": "^6.0.1",
     "@types/redux": "^3.6.31",
     "@types/styled-components": "^4.0.3",
     "@types/styled-system": "^3.0.8",

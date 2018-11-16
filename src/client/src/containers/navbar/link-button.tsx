@@ -1,6 +1,6 @@
-import { Box } from '@rebass/grid'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Box } from 'rebass'
 import styled from 'styled-components'
 import { fontSize, space } from 'styled-system'
 

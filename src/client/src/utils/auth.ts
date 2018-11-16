@@ -1,4 +1,5 @@
 import auth0, { Auth0DecodedHash } from 'auth0-js'
+import User from '../modules/auth/user'
 import { history } from '../store'
 
 const currentHost = window.location.href.split('/').slice(0, 3).join('/')
@@ -12,29 +13,27 @@ const options = {
 }
 
 export default class Auth {
-  public userProfile: any
   public tokenRenewalTimeout: any
-
   public auth0 = new auth0.WebAuth(options)
-
-  constructor() {
-    this.scheduleRenewal()
-  }
 
   public login() {
     this.auth0.authorize()
   }
 
-  public handleAuthentication() {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult)
-        history.push('/')
-      } else if (err) {
-        history.push('/')
-        console.log(err)
-        console.log(`Error: ${err.error}. Check the console for further details.`)
-      }
+  public handleAuthentication(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.auth0.parseHash((err, authResult) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          console.log('success')
+          this.setSession(authResult)
+          resolve()
+        } else if (err) {
+          console.log('fail')
+          console.log(err)
+          console.log(`Error: ${err.error}. Check the console for further details.`)
+          reject(err)
+        }
+      })
     })
   }
 
@@ -67,13 +66,17 @@ export default class Auth {
     return accessToken
   }
 
-  public getProfile(cb: any) {
-    const accessToken = this.getAccessToken()
-    this.auth0.client.userInfo(accessToken, (err, profile) => {
-      if (profile) {
-        this.userProfile = profile
-      }
-      cb(err, profile)
+  public getProfile(): Promise<User> {
+    return new Promise<User>((resolve, reject) => {
+      const accessToken = this.getAccessToken()
+      this.auth0.client.userInfo(accessToken, (err, profile) => {
+        if (profile) {
+          const user = new User(profile.nickname, profile.picture)
+          resolve(user)
+        } else {
+          reject(err)
+        }
+      })
     })
   }
 
@@ -83,13 +86,12 @@ export default class Auth {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     localStorage.removeItem('scopes')
-    this.userProfile = null
     clearTimeout(this.tokenRenewalTimeout)
     // navigate to the home route
     history.push('/')
   }
 
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
     const expiresAt = JSON.parse(String(localStorage.getItem('expires_at')))

@@ -1,13 +1,21 @@
-import { Flex } from '@rebass/grid'
 import React from 'react'
+import { connect } from 'react-redux'
+import { Flex } from 'rebass'
 import { Image } from 'rebass'
+import { bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
-import { auth } from '../../store'
+import {
+  IAuth,
+  isAuthenticated,
+  login,
+  logout,
+} from '../../modules/auth'
 import LinkButton from './link-button'
 import LogoImage from './logo.svg'
 
 const NavWrap = styled(Flex)`
   background-color: ${(props) => props.theme.components.navbar.background};
+  width: 100%;
 `
 
 const LogoContainer = styled(Image)`
@@ -17,17 +25,33 @@ const LogoContainer = styled(Image)`
   margin-bottom: auto;
 `
 
-const NavBar = () => (
-  <NavWrap width={'100%'}>
+const NavBar = (props: any) => (
+  <NavWrap>
     <LogoContainer src={LogoImage} ml={3} />
     <LinkButton to={'/'} text={'Open Baseball'} bold={true} />
-    {auth.isAuthenticated() &&
-    <LinkButton onClick={() => auth.logout()} right to={'/'} text={'LogOut'} />
+    {isAuthenticated() &&
+      <LinkButton onClick={() => props.logout()} right to={'/'} text={'LogOut'} />
     }
-    {!auth.isAuthenticated() &&
-    <LinkButton right to={'/register'} text={'Join'} red={true} />
+    {!isAuthenticated() &&
+      <LinkButton onClick={() => props.login()} right to={'/'} text={'Join'} red={true} />
     }
   </NavWrap>
 )
 
-export default NavBar
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      login,
+      logout,
+    },
+    dispatch,
+  )
+
+const mapStateToProps = ({ auth }: { auth: IAuth }) => ({
+  user: auth.user,
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NavBar)

@@ -1,6 +1,8 @@
-import { Flex } from '@rebass/grid'
-import React from 'react'
-import { Route } from 'react-router-dom'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { Route, withRouter } from 'react-router-dom'
+import { Flex } from 'rebass'
+import { bindActionCreators, Dispatch } from 'redux'
 import styled from 'styled-components'
 import { Normalize } from 'styled-normalize'
 import AboutPage from './containers/about'
@@ -9,11 +11,11 @@ import NavBar from './containers/navbar'
 import PlayBeginningPage from './containers/play-beginning'
 import PlayerPage from './containers/player'
 import ProtectedPage from './containers/protected'
-import RegistrationPage from './containers/registration'
 import SuccessLoginPage from './containers/success-login'
 import TeamCreatePage from './containers/team-create'
 import './main.css'
-import { auth } from './store'
+import { IAuth, isAuthenticated, refreshUser } from './modules/auth'
+import User from './modules/auth/user'
 
 const AppContainer = styled(Flex)`
   font-family: "Play", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -22,26 +24,51 @@ AppContainer.defaultProps = {
   flexDirection: 'column',
 }
 
-const protect = (component: any) => (
-  auth.isAuthenticated()
-    ? component
-    : ProtectedPage
-)
+const Content = styled(Flex)`
+  width: 100%;
+`
 
-const App = () => (
-  <AppContainer>
-    <Normalize />
-    <NavBar />
-    <Flex width={'100%'}>
-      <Route exact path='/' component={HomePage} />
-      <Route exact path='/play' component={PlayBeginningPage} />
-      <Route exact path='/play/new-team' component={protect(TeamCreatePage)} />
-      <Route exact path='/player/:id' component={PlayerPage} />
-      <Route exact path='/about' component={AboutPage} />
-      <Route exact path='/callback' component={SuccessLoginPage} />
-      <Route exact path='/register' component={RegistrationPage} />
-    </Flex>
-  </AppContainer>
-)
+interface IAppProps {
+  user?: User
+  refreshUser: any
+}
 
-export default App
+class App extends PureComponent<IAppProps> {
+  public render() {
+    return (<AppContainer>
+      <Normalize />
+      <NavBar />
+      <Content>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/play' component={PlayBeginningPage} />
+        <Route exact path='/play/new-team' component={this.protect(TeamCreatePage)} />
+        <Route exact path='/player/:id' component={PlayerPage} />
+        <Route exact path='/about' component={AboutPage} />
+        <Route exact path='/callback' component={SuccessLoginPage} />
+      </Content>
+    </AppContainer>)
+  }
+
+  public componentDidMount() {
+    this.props.refreshUser()
+  }
+
+  protected protect = (component: any) => isAuthenticated ? component : ProtectedPage
+}
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      refreshUser,
+    },
+    dispatch,
+  )
+
+const mapStateToProps = ({ auth }: { auth: IAuth }) => ({
+  user: auth.user,
+})
+
+export default withRouter<any>(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App))
