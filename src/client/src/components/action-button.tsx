@@ -5,7 +5,8 @@ import { history } from '../store'
 
 interface IActionButtonProps {
   text: string
-  to: string
+  to?: string
+  onClick?: () => void,
 }
 
 // TODO: fix ANY interface
@@ -15,13 +16,18 @@ const Button: any = styled(RebassButton)`
   font-weight: bold;
   outline: none;
 `
+Button.defaultProps = {
+  ...Button.defaultProps,
+  m: 2,
+  px: 4,
+  py: 4,
+}
 
 const ActionButton = (props: IActionButtonProps) => (
   <Button
-    m={2}
-    py={4}
-    px={'4'}
-    onClick={() => {history.push(props.to)}}
+    onClick={() => {(props.onClick !== undefined)
+      ? props.onClick()
+      : history.push(props.to || '/')}}
   >
     {props.text}
   </Button>

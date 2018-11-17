@@ -53,7 +53,7 @@ class App extends PureComponent<IAppProps> {
     this.props.refreshUser()
   }
 
-  protected protect = (component: any) => isAuthenticated ? component : ProtectedPage
+  protected protect = (component: any) => isAuthenticated() ? component : ProtectedPage
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

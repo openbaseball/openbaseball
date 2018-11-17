@@ -20,13 +20,13 @@ export default class Auth {
     this.auth0.authorize()
   }
 
-  public handleAuthentication(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+  public handleAuthentication(): Promise<Auth0DecodedHash> {
+    return new Promise<Auth0DecodedHash>((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           console.log('success')
           this.setSession(authResult)
-          resolve()
+          resolve(authResult)
         } else if (err) {
           console.log('fail')
           console.log(err)
@@ -71,7 +71,11 @@ export default class Auth {
       const accessToken = this.getAccessToken()
       this.auth0.client.userInfo(accessToken, (err, profile) => {
         if (profile) {
-          const user = new User(profile.nickname, profile.picture)
+          const user = new User(
+            profile.nickname,
+            profile.picture,
+            String(localStorage.getItem('id_token')),
+          )
           resolve(user)
         } else {
           reject(err)

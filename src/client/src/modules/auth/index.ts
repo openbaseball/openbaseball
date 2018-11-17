@@ -6,7 +6,8 @@ import User from './user'
 export const REFRESH_USER = 'auth/REFRESH_USER'
 export const DO_LOGOUT = 'auth/DO_LOGOUT'
 
-const auth = new Auth()
+// TODO: remove this export, this is a state leak
+export const auth = new Auth()
 
 export interface IAuth {
   user?: User
@@ -21,7 +22,7 @@ export default (state = initialState, action: any) => {
     case REFRESH_USER:
       return {
         ...state,
-        user: new User(action.nickname, action.avatar),
+        user: {...action.user},
       }
 
     case DO_LOGOUT:
@@ -56,9 +57,8 @@ export const refreshUser = () => {
     auth.getProfile()
       .then((user: User) => {
         dispatch({
-          avatar: user.avatar,
-          nickname: user.nickname,
           type: REFRESH_USER,
+          user,
         })
       })
       // tslint:disable-next-line
