@@ -21,7 +21,7 @@
     "connected-react-router": "^4.5.0",
     "history": "^4.7.2",
     "polished": "^2.3.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
